@@ -19,13 +19,15 @@ const showImages = (images) => {
   gallery.innerHTML = '';
   // show gallery title
   galleryHeader.style.display = 'flex';
-  images.forEach(image => {
-    let div = document.createElement('div');
-    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-    gallery.appendChild(div)
-  })
-
+  console.log(images.length);
+  if(images.length>1)
+  {
+    images.forEach(image => {
+      let div = document.createElement('div');
+      div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
+      div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+      gallery.appendChild(div)
+    })}
 }
 
 const getImages = (query) => {
@@ -40,12 +42,17 @@ let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
-
   let item = sliders.indexOf(img);
+  
   if (item === -1) {
+    element.classList.add("added");
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    //const idx = sliders.findIndex(img);
+    element.classList.remove("added");
+    sliders.splice(item,1);  
+    //console.log(idx);
+    //alert('Hey, Already added !')
   }
 }
 var timer
@@ -125,9 +132,11 @@ searchBtn.addEventListener('click', function () {
   }else{
     alert("No keyword entered");
   }
-  
 })
 
 sliderBtn.addEventListener('click', function () {
-  createSlider()
+  if(images.length>1){
+    createSlider();
+  }
+  
 })
