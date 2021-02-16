@@ -18,16 +18,18 @@ const showImages = (images) => {
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
-  galleryHeader.style.display = 'flex';
   console.log(images.length);
   if(images.length>1)
   {
+    galleryHeader.style.display = 'flex';
     images.forEach(image => {
       let div = document.createElement('div');
       div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
       div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
       gallery.appendChild(div)
-    })}
+    })}else{
+      gallery.innerHTML=`<h2>Didn't found any match</h2>`;
+    }
 }
 
 const getImages = (query) => {
@@ -135,8 +137,8 @@ searchBtn.addEventListener('click', function () {
 })
 
 sliderBtn.addEventListener('click', function () {
-  if(images.length>1){
+  
     createSlider();
-  }
+  
   
 })
